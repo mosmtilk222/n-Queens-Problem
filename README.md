@@ -14,8 +14,8 @@ Note:
 The POO solution 
 
 Note:
--I think is faster than the other but sometimes I don't know why It just fail with one square but it actually put correctly 99 queens out of 100 
--English and commented :)
--Haven´t tried it
+- I think is faster than the other but sometimes I don't know why It just fail with one square but it actually put correctly 99 queens out of 100 
+- English and commented :)
+- Haven´t tried it
 
 Next goal do a solution with pandas
