@@ -3,19 +3,16 @@ My solution to the n-Queens problem
 
 This repository is about my solutions to the n-Queens problem. 
 
-The first solution can solve the problem with n = 150 in more less 6 hours, I haven't tried with a larger value to n.
+Contains:
 
-Note:
-- It is 100% accurate
-- Slow because of list comprehensions
-- Slow at the begging but then faster
-- It doesn't have comments and most of it is in spanish (noob dev) 
+GUI.py
 
-The POO solution 
+Script that creates the images and the final video of the algorithm working, see example 100 queens to know what I am talking about
 
-Note:
-- I think is faster than the other but sometimes I don't know why It just fail with one square but it actually put correctly 99 queens out of 100 
-- English and commented :)
-- Haven´t tried it
+board.py
 
-Next goal do a solution with pandas
+Script that will create a list of tiles that represents the chess board
+
+solution.py
+
+The core of the algorithm, this finds one solution for a given n number
