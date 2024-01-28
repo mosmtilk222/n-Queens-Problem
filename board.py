@@ -1,6 +1,15 @@
 # DATA will be filled with tiles
 DATA = []
 
+class Tile:
+
+    def __init__(self, id, row, column, diagonal_swne, diagonal_senw):
+        self.id = id
+        self.row = row
+        self.column = column
+        self.diagonal_swne = diagonal_swne
+        self.diagonal_senw = diagonal_senw
+
 def create_board(num):
 
     '''Function that will create a chess board'''
@@ -50,6 +59,7 @@ def create_board(num):
     adding_all_rows(num, tile_id, row, column, diagonalSW_NE, diagonalSE_NW)
 
     return DATA
+
 def adding_all_rows(width, index, r, c, dswne, dsenw):
 
     # Iterating n times depending on the width
@@ -58,7 +68,7 @@ def adding_all_rows(width, index, r, c, dswne, dsenw):
 
     # In this function we are moving down in every iteration  
 
-    for i in range(width):
+    for _ in range(width):
 
         # Every iteration the id adds n because every row
         # have n tiles and because we are starting a new one
@@ -104,7 +114,7 @@ def adding_tile(width, index, r, c, dswne, dsenw):
         dsenw -= 1
 
         # Calling adding_tile_to_DATA and passing all the right arguments
-        adding_tile_to_DATA(index, r, c, dswne, dsenw)
+        adding_tile_to_DATA2(index, r, c, dswne, dsenw)
 
 def adding_tile_to_DATA(index, r, c , dswne, dsenw):
 
@@ -126,3 +136,18 @@ def adding_tile_to_DATA(index, r, c , dswne, dsenw):
     # So at the end we have a list of all the tiles,
     # the tiles are dictionaries with their own values
     # The keys in all tiles are id, row, column, diagonal SW-NE, diagonal SE-NW
+
+def adding_tile_to_DATA2(index, r, c , dswne, dsenw):
+
+    ## Finally declaring all the values in a dictionary
+
+    # Declaring an empty dictionarie  
+    tile = Tile(index, r, c, dswne, dsenw)
+
+    # Adding the tile to DATA
+    DATA.append(tile)
+
+    # So at the end we have a list of all the tiles,
+    # the tiles are dictionaries with their own values
+    # The keys in all tiles are id, row, column, diagonal SW-NE, diagonal SE-NW
+
