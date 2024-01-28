@@ -1,12 +1,6 @@
 from random import choice
 from math import sqrt
-import csv
-import time
-from GUI import base_board, drawing_lines, video
-from PIL import Image
 from board import create_board
-import os
-from datetime import datetime
 
 def run(datos):
 
@@ -27,16 +21,11 @@ def run(datos):
     # And add it to the occupied tiles
     occ_tiles.append(chosen_tile)
 
-    ## Creating the image containing the new chosen tile
-    # Calling drawing lines with its arsguments
-    global image_num
-    image_num = 2
-
-    drawing_lines(path, chosen_tile, num, image_num)
-
     # This variable will contain a list of tiles that are not affected
     # by the last tile we chose
     available_tiles = filtration([chosen_tile], datos)
+
+    its.append(len(available_tiles))
 
     # Calling run 2 having made the first decission and its 
     # corresponding filtration and sending them as arguments
@@ -51,15 +40,10 @@ def run2(data, occ_tiles):
     # Adding the tile to the occupied tiles list
     occ_tiles.append(chosen_tile)
 
-    ## Creating the image containing the new chosen tile
-    # Calling drawing lines with its arsguments
-    global image_num
-    image_num += 1
-
-    drawing_lines(path, chosen_tile, num, image_num)
-
     # Getting the board filtrated again
     available_tiles = filtration([chosen_tile], data)
+
+    its.append(len(available_tiles))
 
     # If we still have available tiles we call run2 again
     if len(available_tiles) != 0:
@@ -77,6 +61,9 @@ def run2(data, occ_tiles):
         ## If this if statement is true means that the algorithm failed
 
         # Restart all 
+
+        its.append(len(DATA))
+
         run(DATA)
 
     # If all the last statements are false means that we have found the answer
@@ -91,19 +78,9 @@ def run2(data, occ_tiles):
         ids_occ_tiles.sort()
         print(f'The solution is: {ids_occ_tiles}')
 
-        # Timer end
-        toc = time.time()
+        print(its)
 
-        # Getting the number of seconds the script took
-        seconds = toc-tic
-
-        # Appending the result to our csvfile
-        with open('solutions.csv', 'a') as csvfile:
-
-            writer = csv.writer(csvfile)
-
-            # Appending solution, n (number of queens) and the time it took with 4 decimals
-            writer.writerow([ids_occ_tiles] + [len(ids_occ_tiles)] + ["%.4f" % seconds])
+        its.clear()
 
 def random_choice(data):
 
@@ -208,39 +185,13 @@ if __name__ == '__main__':
     global num
     num = int(input('How many squares width do you want the board?:'))
 
-    # Number that will tag every image in the folder
-    global image_num
-    image_num = 1
-
     # Create the board and save it in DATA
     DATA = create_board(num)
 
-    # Setting the timer start
-    tic = time.time()
-
-    ## Date will be the name of the folder where the image will be saved
-    # Date will be a string containing the following format YYYY-MM-DD HH.MM.SS 
-    date = str(datetime.fromtimestamp(tic)).replace(':', '.')[0:19]
-
-    ## Saving the image in the proper folder
-    # Getting the dictionary where we are currently working
-    parentDir = os.getcwd()
-
-    # The path to the folder
-    global path
-    path = os.path.join(parentDir, 'images', str(num), date)
-
-    # Making the folder in the proper path
-    os.mkdir(path)
-    
-    # Creating the base image
-    img = Image.fromarray(base_board(num))
-    img = img.convert("RGB")
-
-    # Saving the image in the folder
-    img.save(f'images/{str(num)}/{date}/image{str(image_num)}.jpg')
+    # List that records the number of iterations that have to be done
+    global its
+    its = []
   
-    # Calling the run function to begin the solving algorithm
-    run(DATA)
-
-    video(path, num)
+    for _ in range(10):
+        its.append(len(DATA))
+        run(DATA)
